@@ -23,6 +23,16 @@ import itml.cards.*;
  */
 public class BattleSim {
 
+	private static Agent initMyAgent(int msConstruct, int msPerMove, int msLearning, CardDeck deck) {
+		Agent agentMy = new SimpleSuccessfulAgent( deck.clone(), msConstruct, msPerMove, msLearning );   // The first agent is yours -- change to yours.
+		return agentMy;
+	}
+	
+	private static Agent initOpponentAgent(int msConstruct, int msPerMove, int msLearning, CardDeck deck) {
+		Agent agentOpp = new AgentRandom( deck.clone(), msConstruct, msPerMove, msLearning );   // The second agent is your opponent.
+		return agentOpp;
+	}
+
     /**
      *  This is the main routine.
      *
@@ -36,7 +46,7 @@ public class BattleSim {
 
         // Default arguments.
         int numStepsInGame   = 30;     // Maximum step length of a game.
-        int numTrainingGames = 10;     // Number of games to play in the training phase.
+        int numTrainingGames = 1000;     // Number of games to play in the training phase.
         int numPlayingGames  = 100;    // Number of games to play in the evaluation phase.
         int msConstruct      = 5000;   // Maximum time to use in Agent constructor (in ms.)
         int msPerMove        = 50;     // Maximum time to use per act, startGame, endGame call.
@@ -84,7 +94,7 @@ public class BattleSim {
         long  msStart, msDuration;
 
         msStart = System.currentTimeMillis();
-        Agent agentMy = new AgentRandom( deck.clone(), msConstruct, msPerMove, msLearning );   // The first agent is yours -- change to yours.
+        Agent agentMy = initMyAgent(msConstruct, msPerMove, msLearning, deck);
         msDuration = System.currentTimeMillis() - msStart;
         System.out.println("Timing agent constructor = " + msDuration );
         if ( msDuration > msConstruct ) {
@@ -92,7 +102,7 @@ public class BattleSim {
         }
 
         msStart = System.currentTimeMillis();
-        Agent agentOpp = new AgentTerminator( deck.clone(), msConstruct, msPerMove, msLearning );   // The second agent is your opponent.
+        Agent agentOpp = initOpponentAgent(msConstruct, msPerMove, msLearning, deck);
         msDuration = System.currentTimeMillis() - msStart;
         System.out.println("Timing agent constructor = " + msDuration );
         if ( msDuration > msConstruct ) {
