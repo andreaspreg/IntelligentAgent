@@ -29,7 +29,7 @@ public class BattleSim {
 	}
 	
 	private static Agent initOpponentAgent(int msConstruct, int msPerMove, int msLearning, CardDeck deck) {
-		Agent agentOpp = new AgentRandom( deck.clone(), msConstruct, msPerMove, msLearning );   // The second agent is your opponent.
+		Agent agentOpp = new AgentTerminator( deck.clone(), msConstruct, msPerMove, msLearning );   // The second agent is your opponent.
 		return agentOpp;
 	}
 
@@ -46,7 +46,7 @@ public class BattleSim {
 
         // Default arguments.
         int numStepsInGame   = 30;     // Maximum step length of a game.
-        int numTrainingGames = 1000;     // Number of games to play in the training phase.
+        int numTrainingGames = 100;     // Number of games to play in the training phase.
         int numPlayingGames  = 100;    // Number of games to play in the evaluation phase.
         int msConstruct      = 5000;   // Maximum time to use in Agent constructor (in ms.)
         int msPerMove        = 50;     // Maximum time to use per act, startGame, endGame call.
